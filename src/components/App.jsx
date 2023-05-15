@@ -24,6 +24,10 @@ export class App extends Component {
       alert('Enter the title');
       return;
     }
+    if (value === this.state.pictureName) {
+      alert(`You have already entered the word ${value}`)
+      return
+    }
     this.setState({
       pictureName: value.toLowerCase(),
       pictures: [],
