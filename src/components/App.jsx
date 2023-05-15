@@ -3,6 +3,7 @@ import { Searchbar } from './Searchbar';
 import { ImageGallery } from './ImageGallery';
 import { Button } from './Button';
 import { Loader } from './Loader';
+import { Modal } from './Modal';
 import css from './App.module.css';
 
 export class App extends Component {
@@ -28,7 +29,6 @@ export class App extends Component {
       pictures: [],
       page: 1,
     });
-    event.currentTarget.reset();
   };
 
   onLoadMore = () => {
@@ -67,8 +67,14 @@ export class App extends Component {
   render() {
     return (
       <div className={css.App}>
+        {this.state.status === 'rejected' && (
+          <h1>{this.state.error.message}</h1>
+        )}
         <Searchbar onSubmit={this.hendleSubmit} />
-        <ImageGallery state={this.state} onModal={this.onModal} />
+        <ImageGallery pictures={this.state.pictures} onModal={this.onModal} />
+        {this.state.showeModal && (
+          <Modal onClose={this.onModal} urlPhoto={this.state.urlPicture} />
+        )}
 
         {this.state.status === 'pending' && <Loader />}
         {this.state.pictures.length >= 12 && (
@@ -78,4 +84,3 @@ export class App extends Component {
     );
   }
 }
-

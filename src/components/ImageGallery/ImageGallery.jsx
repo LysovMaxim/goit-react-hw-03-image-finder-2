@@ -1,28 +1,16 @@
-import { Component } from 'react';
 import { ImageGalleryItem } from '../ImageGalleryItem';
 import css from './ImageGallery.module.css';
-import { Modal } from '../Modal';
+import PropTypes from 'prop-types';
 
-export class ImageGallery extends Component {
-  render() {
-    const { pictures, error, status, showeModal, urlPicture } =
-      this.props.state;
-
-    if (status === 'rejected') {
-      return <h1>{error.message}</h1>;
-    }
-
-    return (
+export const ImageGallery = ({ pictures, onModal }) => {
+  return (
       <>
-        {showeModal && (
-          <Modal onClose={this.props.onModal} urlPhoto={urlPicture} />
-        )}
         {
           <ul className={css.ImageGallery}>
             {pictures &&
               pictures.map(({ id, webformatURL, largeImageURL }) => (
                 <ImageGalleryItem
-                  onClick={this.props.onModal}
+                  onClick={onModal}
                   key={id}
                   id={id}
                   picture={webformatURL}
@@ -33,5 +21,11 @@ export class ImageGallery extends Component {
         }
       </>
     );
-  }
 }
+  
+ImageGallery.propTypes = {
+  pictures: PropTypes.array.isRequired,
+  onModal: PropTypes.func.isRequired,
+};
+
+
