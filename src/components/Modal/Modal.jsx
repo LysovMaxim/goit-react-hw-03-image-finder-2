@@ -3,41 +3,40 @@ import css from './Modal.module.css';
 import PropTypes from 'prop-types';
 
 export class Modal extends Component {
-  componentDidMount() { 
-window.addEventListener("keydown" ,this.hendleKeyDown)
-  }
-  
-  componentDidUpdate() {
-    window.addEventListener("keydown",this.hendleKeyDown)
+  componentDidMount() {
+    window.addEventListener('keydown', this.hendleKeyDown);
   }
 
-  hendleKeyDown = (event) =>{
-    if (event.code === "Escape") {
+  componentDidUpdate() {
+    window.addEventListener('keydown', this.hendleKeyDown);
+  }
+
+  hendleKeyDown = event => {
+    if (event.code === 'Escape') {
       this.props.onClose();
     }
-  }
+  };
 
-  hendleBeckdropClick = (event) => {
+  hendleBeckdropClick = event => {
     if (event.currentTarget === event.target) {
       this.props.onClose();
     }
-  }
+  };
 
-
-render(){
+  render() {
     return (
-    <div className={css.Overlay} onClick={this.hendleBeckdropClick}>
-      <div className={css.Modal}>
-        <img src={this.props.urlPhoto.url} alt="" />
+      <div className={css.Overlay} onClick={this.hendleBeckdropClick}>
+        <div className={css.Modal}>
+          <img src={this.props.urlPhoto.url} alt="" />
+        </div>
       </div>
-    </div>
-   
-  );
+    );
+  }
 }
-
-};
 
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  urlPhoto: PropTypes.object.isRequired,
+  urlPhoto: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+  }),
 };
